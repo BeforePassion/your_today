@@ -1,5 +1,3 @@
-# How are you today?
-
-### Project Name : Today's EOTD(Emotion of the day)
-
-## Wireframe
+We'll recommend many things for you!<br>
+Music, Movie and Chicken!!!!!!<br>
+Enjoy with us!
