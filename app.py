@@ -1,4 +1,3 @@
-
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from datetime import datetime
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
@@ -66,6 +65,4 @@ def result_second():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
-
-
 
