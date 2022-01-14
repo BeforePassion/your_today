@@ -1,0 +1,14 @@
+@import 'index.css';
+@import 'home.css';
+@import 'result_chicken.css';
+@import 'status-bar.css';
+
+* {
+    font-family: 'Nanum Pen Script', cursive;
+}
+
+body {
+    width: 100%;
+    height: auto;
+    margin: 0 auto;
+}

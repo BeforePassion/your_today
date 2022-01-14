@@ -1,0 +1,61 @@
+<!DOCTYPE html> 
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>너의 오늘</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="wrapper">
+        <div class="status-bar">
+            <div class="left" id="time" >
+            </div>
+            <div class="right">
+                <i class="fa fa-signal" style="font-size:24px; color: white;"></i>
+                <i class="fa fa-wifi" style="font-size:24px; color: white;"></i>
+                <i class="fa fa-battery-4" style="font-size:24px; color: white;"></i>
+            </div>
+        </div>
+        <div id="home-container">
+            <div class="home-container-logo">
+                <img style="max-width: 300px; max-height: 100px; width: 50vw; height: 17vw;" src="../static/image/containerlogo.jpg" alt="로고">
+            </div>
+            <div class="home-container_title">
+                <div class="home-container_img">
+                    <img style="max-width: 500px; max-height: 500px; width: 70vw; height: 70vw; border-radius: 20px; border: 3px solid black; margin-bottom: 20px;" id="preview-image" src="../static/image/sample.jpg">
+                </div>
+                <div class="home-container-upload-btn" id="upload-btn">
+                    <form method="post" enctype="multipart/form-data" class="first_btn">
+                        <div class="button">
+                            <label for="chooseFile">사진 올려볼까요 😉</label>
+                        </div>
+                        <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
+                    </form>
+                    <div class="home-container_button">
+                        <button onclick="posting()" class="submitButton" id="submitButton">오늘 내 기분은 🤔</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="home-container_body">
+                <p>오늘 당신의 기분은!</p>
+                <p>기쁨, 슬픔, 무관심</p>
+                <div id="home-container_recommend">
+                    <button style="width: 200px; font-size: 24px;" class="submitButton" onclick="window.location.href='/result/recommend'">오늘 우리가<br>당신에게 할 추천은?</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="../static/js/home.js"></script>
+    <script src="../static/js/time.js"></script>
+</body>
+</html>

@@ -16,6 +16,7 @@ from pymongo import MongoClient
 # print("model roaded")
 
 
+<<<<<<< HEAD
 # client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
 # db = client.dbprojects
 
@@ -23,6 +24,9 @@ from pymongo import MongoClient
 # SY db 테스트용
 client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
 db = client.dbsidepj
+=======
+from flask import Flask, render_template, jsonify, request, session, redirect, url_for
+>>>>>>> e3aa1dee529262f4d9987a35f5a0406eda0d7f18
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 data = requests.get('https://music.bugs.co.kr/musicpd/albumview/39691', headers=headers)  # 기쁠 때
@@ -43,6 +47,12 @@ data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?
 
 
 
+<<<<<<< HEAD
+=======
+#SY db 테스트용
+client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
+db2 = client.dbsidepj
+>>>>>>> e3aa1dee529262f4d9987a35f5a0406eda0d7f18
 
 
 

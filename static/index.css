@@ -1,0 +1,48 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 150px;
+}
+
+.container > img {
+    width: 95vw;
+    height: 30vw;
+    max-width: 720px;
+    max-height: 200px;
+    margin-bottom: 20px;
+}
+
+@keyframes hideSplashScreen {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+#splash-screen {
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    background-color: #FFDAB9;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    animation: hideSplashScreen 2s ease-in-out forwards;
+}
+
+#splash-screen > img {
+    max-width: 350px;
+    max-height: 350px;
+    width: 50vw;
+    height: 50vw;
+}
+
+#splash-screen > p {
+    color: white;
+    font-size: 80px;
+}

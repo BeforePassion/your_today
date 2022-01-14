@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="kr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>너의 오늘</title>
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+
+</head>
+<body>
+    <div id="wrapper">
+        <div class="status-bar">
+            <div class="left" id="time" >
+            </div>
+            <div class="right">
+                <i class="fa fa-signal" style="font-size:24px; color: white;"></i>
+                <i class="fa fa-wifi" style="font-size:24px; color: white;"></i>
+                <i class="fa fa-battery-4" style="font-size:24px; color: white;"></i>
+            </div>
+        </div>
+        <div id="home-container">
+            <div class="chicken-container-logo">
+                <img style="max-width: 300px; max-height: 100px; width: 50vw; height: 17vw;" src="../static/image/chickenlogo.png" alt="로고">
+            </div>
+            <div class="chicken-container_title">
+                <div class="chicken-container_img">
+                    <img style="max-width: 500px; max-height: 500px; width: 60vw; height: 60vw; border-radius: 20px; border: 3px solid black; margin-bottom: 20px; padding: 30px" id="preview-image" src="../static/image/guess.png">
+                </div>
+                <div class="chicken-container-ment">
+                    <img style="max-width: 300px; max-height: 60px; width: 60vw; height: 10vw;" src="../static/image/pullchicken.jpeg" alt="멘트">
+                </div>
+                <div class="chicken-container-desc">
+                    <p>치킨설명</p>
+                </div>
+                <div class="chicken-container_button">
+                    <button style="font-size: 24px;" onclick="window.location.href='/result/second'">
+                        이것도 싫다구욧!?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="../static/js/home.js"></script>
+    <script src="../static/js/time.js"></script>
+    <script src="../static/js/result_chicken.js"></script>
+</body>
+</html>
+<!--# 왜 안되누-->
