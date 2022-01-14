@@ -1,0 +1,51 @@
+body {
+    background-color: #f5f6e6;
+}
+
+#container {
+    margin-top: 30px;
+}
+
+.chicken-container-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 55px;
+    margin-bottom: 35px;
+}
+
+.chicken-container_title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.chicken-container-ment {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+
+.chicken-container-desc {
+    font-size: 26px;
+    margin-bottom: 20px;
+}
+
+.chicken-container_button > button{
+    width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    cursor: pointer;
+    margin-bottom: 50px;
+}
+
+.chicken-container_button > button:hover{
+    background: dimgray;
+}
