@@ -19,13 +19,9 @@ body {
     align-items: center;
 }
 
-.chicken-container-ment {
-    display: flex;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 20px;
-}
 
+
+#chicken-container
 .chicken-container-desc {
     font-size: 26px;
     margin-bottom: 20px;
@@ -49,3 +45,19 @@ body {
 .chicken-container_button > button:hover{
     background: dimgray;
 }
+
+.chicken-container-ment {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    /*animation: up-down 0.3s 10 ease-in-out alternate;*/
+	-webkit-animation: rotate-scale-down 0.65s 4 linear both;
+	        animation: rotate-scale-down 0.65s 4 linear both;
+}
+
+@keyframes rotate-scale-down {
+  50% {
+    -webkit-transform: scale(0.5) rotateZ(0);
+            transform: scale(0.5) rotateZ(0);
+  }
