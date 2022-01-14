@@ -27,7 +27,7 @@ function posting() {
 
     $.ajax({
         type: "POST",
-        url: "/fileupload",
+        url: "/home/analyze",
         data: form_data,
         cache: false,
         contentType: false,
