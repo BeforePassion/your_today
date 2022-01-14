@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../static/second.css">
+    <script src="../static/bootstrap.js"></script>
+    <title>your_today</title>
+</head>
+
+<script>
+    window.onload = function get_data() {
+        $.ajax({
+            type: "POST",
+            url: "/result/api",
+            data: {},
+            success: function (data) {
+                console.log(data['result'])
+                //
+                //
+                let else_data_1 = data['result'][1]
+                for (let i = 0; i < 5; i++) {
+                    let music_title = else_data_1['title'][i]
+                    let music_img_src = else_data_1['img'][i]
+                    let music_singer = else_data_1['singer'][i]
+                    let temp_html1 = `<div class="music_wrapper">
+                                        <img class="music_img" src="${music_img_src}">
+                                        <div class="title">${music_title}</div>
+                                        <div class="singer">${music_singer}</div>
+                                        </img>
+                                    </div>`
+                    $('#music_container_1').append(temp_html1);
+                }
+                for (let i = 0; i < 5; i++) {
+                    let movie_title = else_data_1['movie_title'][i]
+                    let movie_img_src = else_data_1['movie_img'][i]
+                    let movie_point = else_data_1['movie_point'][i]
+                    let temp_html2 = `<div class="movie_container">
+                                        <div class="movie_wrapper">
+                                            <img class="movie_img" src="${movie_img_src}">
+                                            <div class="movie_title">${movie_title}</div>
+                                            <div class="movie_point">${movie_point}</div>
+                                        </div>
+                                    </div>`
+                    $('#movie_container_1').append(temp_html2);
+                }
+                let else_data_2 = data['result'][2]
+                for (let i = 0; i < 5; i++) {
+                    let music_title = else_data_2['title'][i]
+                    let music_img_src = else_data_2['img'][i]
+                    let music_singer = else_data_2['singer'][i]
+                    let temp_html3 = `<div class="music_wrapper">
+                                        <img class="music_img" src="${music_img_src}">
+                                        <div class="title">${music_title}</div>
+                                        <div class="singer">${music_singer}</div>
+                                        </img>
+                                    </div>`
+                    $('#music_container_2').append(temp_html3);
+                }
+                for (let i = 0; i < 5; i++) {
+                    let movie_title = else_data_2['movie_title'][i]
+                    let movie_img_src = else_data_2['movie_img'][i]
+                    let movie_point = else_data_2['movie_point'][i]
+                    let temp_html4 = `<div class="movie_container">
+                                        <div class="movie_wrapper">
+                                            <img class="movie_img" src="${movie_img_src}">
+                                            <div class="movie_title">${movie_title}</div>
+                                            <div class="movie_point">${movie_point}</div>
+                                        </div>
+                                    </div>`
+                    $('#movie_container_2').append(temp_html4);
+                }
+            }
+        })
+    }
+
+</script>
+
+<body>
+<div>음 그렇다면</div>
+<div class="container">
+    <div class="accordion accordion-flush" id="accordionFlushExample">
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingOne">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne">
+                    추천 1
+                </button>
+            </h2>
+            <div id="flush-collapseOne" class="accordion-collapse collapse" aria-labelledby="flush-headingOne"
+                 data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="data_container">
+<!--                        ajax 부분-->
+<!--                        <div class="music_container" id="music_container_1"></div>-->
+<!--                        <div class="movie_container" id="movie_container_1"></div>-->
+<!--                        ajax 부분-->
+
+<!--                        css test용, 삭제-->
+                        <div class="music_container">
+                            <div class="music_wrapper">
+                                <img class="music_img"
+                                     src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
+                                <div class="title">제목</div>
+                                <div class="singer">가수</div>
+                                </img>
+                            </div>
+                            <div class="music_wrapper">
+                                <img class="music_img"
+                                     src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
+                                <div class="title">제목</div>
+                                <div class="singer">가수</div>
+                                </img>
+                            </div>
+                            <div class="music_wrapper">
+                                <img class="music_img"
+                                     src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
+                                <div class="title">제목</div>
+                                <div class="singer">가수</div>
+                                </img>
+                            </div>
+                        </div>
+                        <div class="movie_container">
+                            <div class="movie_wrapper">
+                                <img class="movie_img"
+                                     src="">
+                                <div class="movie_title">영화제목</div>
+                                <div class="movie_point">평점</div>
+                            </div>
+                        </div>
+<!--                        css test용, 삭제-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="accordion-item">
+            <h2 class="accordion-header" id="flush-headingTwo">
+                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo">
+                    추천 2
+                </button>
+            </h2>
+            <div id="flush-collapseTwo" class="accordion-collapse collapse" aria-labelledby="flush-headingTwo"
+                 data-bs-parent="#accordionFlushExample">
+                <div class="accordion-body">
+                    <div class="data_container">
+                        <div class="music_container" id="music_container_2"></div>
+                        <div class="movie_container" id="movie_container_2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
