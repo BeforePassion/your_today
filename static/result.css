@@ -1,14 +1,22 @@
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
 .color_container {
     width: 100%;
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    align-items: center;
     margin: 30px;
+}
+
+.color_container > img {
+    max-width: 150px;
+    max-height: 180px;
+    width: 15vw;
+    height: 18vw;
+    margin-bottom: 10px;
+}
+
+.color_container > p {
+    font-size: 24px;
+    font-weight: bold;
 }
 
 .color_circle {
@@ -31,6 +39,23 @@
     margin: 30px;
 }
 
+.music_wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-right: 10px;
+}
+
+.music_wrapper > span:nth-child(2) {
+    margin-top: 5px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.music_wrapper > span:last-child {
+    font-size: 18px;
+}
+
 .movie_container {
     width: 80%;
     display: flex;
@@ -38,8 +63,25 @@
     margin: 30px;
 }
 
+.music_container .music_wrapper > img {
+    max-width: 200px;
+    max-height: 200px;
+    width: 20vw;
+    height: 20vw;
+}
+
 .button_wrapper {
-    width: 80%;
+    width: 110px;
     display: flex;
     justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    border-radius: 30px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.button_wrapper:hover {
+    background-color: dimgray;
 }
