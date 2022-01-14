@@ -34,14 +34,12 @@
                 <div class="home-container-upload-btn" id="upload-btn">
                     <form method="post" enctype="multipart/form-data" class="first_btn">
                         <div class="button">
-                            <label for="chooseFile">
-                                사진 올려볼까요 😉
-                            </label>
+                            <label for="chooseFile">사진 올려볼까요 😉</label>
                         </div>
                         <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
                     </form>
                     <div class="home-container_button">
-                        <button class="submitButton" id="submitButton">오늘 내 기분은 🤔</button>
+                        <button onclick="posting()" class="submitButton" id="submitButton">오늘 내 기분은 🤔</button>
                     </div>
                 </div>
             </div>
@@ -50,7 +48,7 @@
                 <p>오늘 당신의 기분은!</p>
                 <p>기쁨, 슬픔, 무관심</p>
                 <div id="home-container_recommend">
-                    <button style="font-size: 24px;" onclick="window.location.href='/result/recommend'">오늘 우리가 당신에게 할 추천은?</button>
+                    <button style="width: 200px; font-size: 24px;" class="submitButton" onclick="window.location.href='/result/recommend'">오늘 우리가<br>당신에게 할 추천은?</button>
                 </div>
             </div>
 
