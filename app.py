@@ -124,7 +124,7 @@ def result_api():
     # thd_data = db.feeling_data.find_one({'feeling_num':pred_sorted[2][0]})  # 3번째로 높은 감정의 값들 가져오기
     # result.append(thd_data)
 
-    return result
+    return jsonify({'result': result})
 
 
 @app.route('/result/second')
