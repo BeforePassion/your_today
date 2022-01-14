@@ -1,29 +1,25 @@
-html {
-    height: 100%;
-}
-
 body {
-    font-family: sans-serif;
-    height: 100%;
-    margin: 0;
+    background-color: #f5f6e6;
 }
 
-.image-container {
-    margin-top: 50px;
+#container {
+    margin-top: 30px;
 }
-.container {
+
+.home-container_title {
     display: flex;
-    height: 100%;
     flex-direction: column;
+    align-items: center;
 }
 
-#preview-image {
-    width: 60%;
-    display: block;
-    margin: auto;
+.home-container-logo {
+    display: flex;
+    justify-content: center;
+    margin-top: 55px;
+    margin-bottom: 35px;
 }
 
-.upload-btn {
+.home-container-upload-btn {
     flex: 1;
     display: flex;
     flex-direction: row;
@@ -36,7 +32,6 @@ body {
 
 label {
     cursor: pointer;
-    font-size: 1em;
 }
 
 #chooseFile {
@@ -81,7 +76,7 @@ label {
     color: white;
     border-radius: 30px;
     padding: 10px;
-    font-size: 13px;
+    font-size: 18px;
 
     cursor: pointer;
 }
@@ -110,23 +105,23 @@ label {
     color: white;
     border-radius: 30px;
     padding: 10px;
-    font-size: 13px;
+    font-size: 18px;
     border: none;
-
     cursor: pointer;
-
 }
 
-.image-show {
-    z-index: -1;
+.home-container_body {
     display: flex;
-    justify-content: center;
+    flex-direction: column;
     align-items: center;
-    position: absolute;
-    width: 100%;
-    height: 100%;
+    margin-bottom: 50px;
 }
 
-.img {
-    position: absolute;
+.home-container_body > p:first-child {
+    font-size: 45px;
+}
+
+.home-container_body > p:nth-child(2) {
+    margin-top: -20px;
+    font-size: 30px;
 }
