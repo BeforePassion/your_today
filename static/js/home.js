@@ -36,7 +36,7 @@ function posting() {
             alert(response["result"])
             // 아래처럼 하지 않아도, 백엔드(app.py)에서 바로 판별 함수를 실행한 뒤에
             // render_template 을 해서 바로 결과 페이지로 넘어가도 됨
-            window.location.href='/result'
+
         }
     });
   }
