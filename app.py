@@ -20,8 +20,6 @@ app = Flask(__name__)
 
 from pymongo import MongoClient
 
-
-
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 
 app = Flask(__name__)
@@ -34,7 +32,7 @@ db = client.dbprojects
 
 #SY db 테스트용
 client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
-db = client.dbsidepj
+db2 = client.dbsidepj
 
 
 import requests
@@ -217,5 +215,4 @@ def result_second():
 
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5001, debug=True)
-
 
