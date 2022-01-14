@@ -1,13 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="kr">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <link rel="stylesheet" href="../static/result.css">
-    <title>your_today</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../static/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <title>너의 오늘</title>
 </head>
 
 <script>
@@ -18,8 +20,6 @@
             data: {},
             success: function (data) {
                 console.log(data['result'])
-                //
-                //
                 let show_data = data['result'][0]  //어떻게 오지
                 let color = show_data['color']
                 let temp_html1 = `<div class="color_circle" style="background-color: ${color}"></div>
@@ -69,46 +69,57 @@
 
 
 <!--이 부분은 css 작업하려고 그냥 만들어놓은 부분. 마지막에 삭제-->
-<div class="container">
-    <div class="color_container" id="color_wrapper">
-        <div class="color_circle" style="background-color: ${color}"></div>
-        <div class="color_comment">오늘 당신의 색깔은 ${color}</div>
-    </div>
-    <div class="music_container">
-        <div class="music_wrapper">
-            <img class="music_img"
-                 src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
-            <div class="title">제목</div>
-            <div class="singer">가수</div>
-            </img>
+
+<div id="wrapper">
+    <div class="status-bar">
+        <div class="left" id="time">
         </div>
-        <div class="music_wrapper">
-            <img class="music_img"
-                 src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
-            <div class="title">제목</div>
-            <div class="singer">가수</div>
-            </img>
-        </div>
-        <div class="music_wrapper">
-            <img class="music_img"
-                 src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0">
-            <div class="title">제목</div>
-            <div class="singer">가수</div>
-            </img>
+        <div class="right">
+            <i class="fa fa-signal" style="font-size:24px; color: white;"></i>
+            <i class="fa fa-wifi" style="font-size:24px; color: white;"></i>
+            <i class="fa fa-battery-4" style="font-size:24px; color: white;"></i>
         </div>
     </div>
-    <div class="movie_container">
-        <div class="movie_wrapper">
-            <img class="movie_img"
-                 src="">
-            <div class="movie_title">영화제목</div>
-            <div class="movie_point">평점</div>
+    <div class="container">
+        <div class="color_container" id="color_wrapper">
+            <img src="../static/image/guess.png" alt="색깔">
+            <p>오늘 당신의 색깔은?</p>
         </div>
+        <div class="music_container" id="music_container">
+            <div class="music_wrapper">
+                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
+                <span>제목</span>
+                <span>가수</span>
+            </div>
+            <div class="music_wrapper">
+                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
+                <span>제목</span>
+                <span>가수</span>
+            </div>
+            <div class="music_wrapper">
+                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
+                <span>제목</span>
+                <span>가수</span>
+            </div>
+        </div>
+        <div class="movie_container">
+            <div class="movie_wrapper">
+                <img class="movie_img"
+                     src="">
+                <div class="movie_title">영화제목</div>
+                <div class="movie_point">평점</div>
+            </div>
+        </div>
+        <button class="button_wrapper" type="button" onclick="window.location.href='/result_chicken'">NEXT</button>
+
+        <!--이 부분은 css 작업하려고 그냥 만들어놓은 부분. 마지막에 삭제-->
     </div>
-    <div class="button_wrapper">
-        <button type="button" class="second_button" onclick="location.href='/result/second'">NEXT</button>
-    </div>
-    <!--이 부분은 css 작업하려고 그냥 만들어놓은 부분. 마지막에 삭제-->
 </div>
+
+
+
+
+<script src="../static/js/time.js"></script>
 </body>
+
 </html>
