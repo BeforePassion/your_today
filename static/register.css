@@ -8,6 +8,9 @@ body {
     margin: 0;
 }
 
+.image-container {
+    margin-top: 50px;
+}
 .container {
     display: flex;
     height: 100%;
