@@ -24,7 +24,7 @@ function posting() {
     let form_data = new FormData()
 
     form_data.append("file_give", file)
-
+    console.log(file.give)
     $.ajax({
         type: "POST",
         url: "/home/analyze",
