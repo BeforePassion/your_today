@@ -1,0 +1,26 @@
+.status-bar {
+    width: 100%;
+    display: flex;
+    position: fixed;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 1;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-bottom: 1px solid #c4c4c4;
+    background-color: black;
+}
+
+.left {
+    margin-left: 10px;
+    font-size: 26px;
+    color: white;
+}
+
+.right {
+    margin-right: 10px;
+}
+.right > i {
+    padding-left: 5px;
+}
