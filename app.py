@@ -16,12 +16,9 @@ from pymongo import MongoClient
 # print("model roaded")
 
 
-# client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
-# db = client.dbprojects
+client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
+db = client.dbprojects
 
-# SY db 테스트용
-client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
-db = client.dbsidepj
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
@@ -48,7 +45,7 @@ data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?
 
 
 check = db.feeling_data.find_one({'feeling_num': 0})
-if check is not None:
+if check is None:
     soup_happiness = BeautifulSoup(data.text, 'html.parser')
     soup_angry = BeautifulSoup(data2.text, 'html.parser')
     song_disgust = BeautifulSoup(data3.text, 'html.parser')
