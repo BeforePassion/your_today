@@ -18,12 +18,15 @@ from pymongo import MongoClient
 
 # client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
 # db = client.dbprojects
+
 # SY db 테스트용
-client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority',
-                     tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
 db = client.dbsidepj
 
 headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+
+
+
 
 
 data = requests.get('https://music.bugs.co.kr/musicpd/albumview/39691', headers=headers)  # 기쁠 때
@@ -34,6 +37,7 @@ data5 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50793', headers
 data6 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50839', headers=headers)  # 슬플 때
 data7 = requests.get('https://music.bugs.co.kr/musicpd/albumview/44402?wl_ref=list_mab_01', headers=headers)  # 놀랄 때
 
+
 data_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=6', headers=headers)  # 기쁠 때
 data1_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=19', headers=headers)  # 화날 때
 data2_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=15', headers=headers)  # 짜증날 때
@@ -42,8 +46,9 @@ data4_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?
 data5_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18', headers=headers)  # 슬플 때
 data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18', headers=headers)  # 놀랄 때
 
+
 check = db.feeling_data.find_one({'feeling_num': 0})
-if check is None:
+if check is not None:
     soup_happiness = BeautifulSoup(data.text, 'html.parser')
     soup_angry = BeautifulSoup(data2.text, 'html.parser')
     song_disgust = BeautifulSoup(data3.text, 'html.parser')
@@ -82,6 +87,7 @@ if check is None:
     color = ['yellow', 'red', 'pink', 'black', 'gray', 'purple', 'blue']
 
     for i in range(7):
+        print(f"{i}번째의 감정에 따른 노래데이터 크롤링 중 입니다!")
         emotion = emotion_musics[i]
         img_list = []
         title_list = []
@@ -97,7 +103,7 @@ if check is None:
             title_list.append(title)
             singer_list.append(singer)
 
-
+        print(f"{i}번째의 감정에 따른 영화데이터 크롤링 중 입니다!")
         emotion_movie = emotion_movies[i]
         # 영화데이터 넣기
         movie = {}
@@ -106,36 +112,38 @@ if check is None:
         movie_img = []
         temp_urls = []
 
-
-        title_list = emotion_movie.select('#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
-        for title in title_list:
-            movie_title.append(title.text)
-            # 각 영화 주소
-            temp_url = 'https://movie.naver.com'
-            temp_url += title.attrs['href']
-            temp_urls.append(temp_url)
-        print("현재 타이틀 땃다")
-        # 영화 이미지, 줄거리
+        movie_title_list = emotion_movie.select('#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
         idx = 0
-        for url in temp_urls:
+        for title in movie_title_list:
             if idx < 10:
-                print(idx, "이제 영화 딴다")
-                movie_profile = requests.get(url, headers=headers)
-                movie_profile_soup = BeautifulSoup(movie_profile.text, 'html.parser')
-
-                movie_profile_img = movie_profile_soup.select_one('#container > #content > div.article > div.mv_info_area > div.poster > a > img')['src']  # 이미지
-                movie_img.append(movie_profile_img)
+                movie_title.append(title.text)
+                # 각 영화 주소
+                temp_url = 'https://movie.naver.com'
+                temp_url += title.attrs['href']
+                temp_urls.append(temp_url)
                 idx += 1
-            else:
-                break
+            else:break
+
+        # 영화 이미지, 줄거리
+        for url in temp_urls:
+            movie_profile = requests.get(url, headers=headers)
+            movie_profile_soup = BeautifulSoup(movie_profile.text, 'html.parser')
+            movie_profile_img = movie_profile_soup.select_one(
+                '#container > #content > div.article > div.mv_info_area > div.poster > a > img')['src']  # 이미지
+            movie_img.append(movie_profile_img)
 
             movie['title'] = movie_title
             movie['img'] = movie_img
 
+        idx = 0
         point_list = emotion_movie.select('#old_content > table.list_ranking > tbody > tr > td.point')
         for point in point_list:
-            movie_point.append(point.text)
+            if idx < 10:
+                movie_point.append(point.text)
+                idx += 1
+            else: break
         movie['point'] = movie_point
+
 
         db.feeling_data.insert_one({
             'feeling_num': i,
@@ -145,8 +153,9 @@ if check is None:
             'singer': singer_list,
             'movie': movie
             # 'chicken': chicken
-        })
 
+        })
+        print(f"{i}번째의 감정에 따른 데이터 저장 했습니다!")
 app = Flask(__name__)
 
 
@@ -199,4 +208,4 @@ def result_second():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5001, debug=False)
+    app.run('0.0.0.0', port=5003, debug=False)
