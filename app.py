@@ -158,13 +158,15 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('first.html')
+    return render_template('index.html')
 
+@app.route('/home')
+def main():
+    return render_template('home.html')
 
 @app.route('/result')
 def result():
     return render_template('result.html')
-
 
 @app.route('/result/api', methods=['POST'])
 def result_api():
@@ -198,6 +200,9 @@ def result_api():
 
     return jsonify({'result': result})
 
+@app.route('/result/result_chicken')
+def result_chicken():
+    return render_template('result_chicken.html')
 
 @app.route('/result/second')
 def result_second():

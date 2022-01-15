@@ -19,6 +19,7 @@
     }
     to {
         opacity: 0;
+        visibility: hidden;
     }
 }
 
@@ -32,7 +33,8 @@
     justify-content: center;
     align-items: center;
     position: absolute;
-    animation: hideSplashScreen 2s ease-in-out forwards;
+    animation: hideSplashScreen 0.7s ease-in-out forwards;
+    animation-delay: 2s;
 }
 
 #splash-screen > img {
