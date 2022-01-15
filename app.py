@@ -21,10 +21,11 @@ from pymongo import MongoClient
 
 
 # SY db 테스트용
-client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=certifi.where())
+client = MongoClient('mongodb+srv://test:sparta@cluster0.g1cco.mongodb.net/Cluster0?retryWrites=true&w=majority',tlsCAFile=certifi.where())
 db = client.dbsidepj
 
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 data = requests.get('https://music.bugs.co.kr/musicpd/albumview/39691', headers=headers)  # 기쁠 때
 data2 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50746', headers=headers)  # 화날 때
 data3 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50519', headers=headers)  # 짜증날 때
@@ -33,20 +34,13 @@ data5 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50793', headers
 data6 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50839', headers=headers)  # 슬플 때
 data7 = requests.get('https://music.bugs.co.kr/musicpd/albumview/44402?wl_ref=list_mab_01', headers=headers)  # 놀랄 때
 
-data_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=6',headers=headers) #기쁠 때
-data1_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=19',headers=headers) # 화날 때
-data2_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=15',headers=headers) # 짜증날 때
-data3_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=11',headers=headers) # 무서울 때
-data4_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=cur&date=20220113',headers=headers) # 무표정일 때
-data5_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',headers=headers) # 슬플 때
-data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',headers=headers) # 놀랄 때
-
-
-
-
-
-
-
+data_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=6',headers=headers)  # 기쁠 때
+data1_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=19',headers=headers)  # 화날 때
+data2_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=15',headers=headers)  # 짜증날 때
+data3_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=11',headers=headers)  # 무서울 때
+data4_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=cur&date=20220113',headers=headers)  # 무표정일 때
+data5_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',headers=headers)  # 슬플 때
+data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',headers=headers)  # 놀랄 때
 
 check = db.feeling_data.find_one({'feeling_num': 0})
 if check is None:
@@ -85,12 +79,10 @@ if check is None:
                       song_surprise_movie
                       ]
 
-
-
     color = ['yellow', 'red', 'pink', 'black', 'gray', 'purple', 'blue']
 
-
     for i in range(7):
+        print(f"{i}번째에 해당하는 감정의 노래 크롤링 시작")
         emotion = emotion_musics[i]
         img_list = []
         title_list = []
@@ -107,8 +99,9 @@ if check is None:
             singer_list.append(singer)
 
         emotion_movie = emotion_movies[i]
-
-        #영화데이터 넣기
+        print(f"{i}번째에 해당하는 감정의 노래 크롤링 완료")
+        # 영화데이터 넣기
+        print(f"{i}번째에 해당하는 감정의 영화 크롤링 시작")
         for detail_movie in emotion_movie:
             movie = {}
             movie_title = []
@@ -118,9 +111,10 @@ if check is None:
             temp_urls = []
             movie_intro_title = []
 
-            #영화타이틀, 주소
-            title_list = detail_movie.select('#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
-            for title in title_list:
+            # 영화타이틀, 주소
+            movie_title_list = detail_movie.select(
+                '#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
+            for title in movie_title_list:
                 movie_title.append(title.text)
                 # 각 영화 주소
                 temp_url = 'https://movie.naver.com'
@@ -143,12 +137,12 @@ if check is None:
                 movie['title'] = movie_title
                 movie['img'] = movie_img
 
-            #영화 점수
+            # 영화 점수
             point_list = detail_movie.select('#old_content > table.list_ranking > tbody > tr > td.point')
             for point in point_list:
                 movie_point.append(point.text)
             movie['point'] = movie_point
-
+        print(f"{i}번째에 해당하는 감정의 영화 크롤링 완료")
         db.feeling_data.insert_one({
             'feeling_num': i,
             'color': color[i],
@@ -158,8 +152,7 @@ if check is None:
             'movie': movie
             # 'chicken': chicken
         })
-
-
+        print(f"{i}번째에 해당하는 감정의 데이터 저장 완료")
 app = Flask(__name__)
 
 
