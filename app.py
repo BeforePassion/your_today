@@ -186,16 +186,11 @@ def home():
 def main():
     return render_template('home.html')
 
-<<<<<<< HEAD
-=======
 
 # @app.route('/result/toss', methods=['POST'])
 # def result_toss():
 #     return redirect(url_for('result', msg=request.form['result']))
 
-
-
->>>>>>> be6e87f1caaf911207aefab61051f59caeb6c789
 @app.route('/result')
 def result():
     file_data = request.form['result']
