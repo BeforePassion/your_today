@@ -191,23 +191,17 @@ def main():
 # def result_toss():
 #     return redirect(url_for('result', msg=request.form['result']))
 
-@app.route('/result')
-def result():
-    file_data = request.form['result']
-    return render_template('result.html', data=file_data)
-
-
 
 @app.route('/result/api', methods=['POST'])
 def result_api():
     # 이미지이기에, rescale 및 size 조정을 위해 ImageDataGenerator 활용
     file = request.files['file_give']
 
-    path = os.getcwd()+'/static/model/img/0/'+file.filename
+    path = os.getcwd()+'\\static\\model\\img\\0\\'+file.filename
     print(path)
 
     try:
-        os.mkdir('/Users/sy/Desktop/pro2_Your_Day/your_today/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
+        os.mkdir(os.getcwd()+'\\static\\model\\img\\0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
     except:
         a = 1
     file.save(path)  # 이미지 파일 저장
@@ -215,8 +209,7 @@ def result_api():
 
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
-    test_dir = 'static/model/img/'  # test_dir에 폴더별로 사진을 저장 해야함
-
+    test_dir = os.getcwd()+'\static\\model/img\\'  # test_dir에 폴더별로 사진을 저장 해야함
     test_generator = test_datagen.flow_from_directory(
         test_dir,
         target_size=(224, 224),
