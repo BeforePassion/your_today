@@ -1,6 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from datetime import datetime
 
+
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 import certifi
@@ -172,11 +173,6 @@ if check is None:
 app = Flask(__name__)
 
 
-@app.route('/result', methods=['POST'])
-def result():
-    #print(request.form['msg'])
-    return render_template('result.html', msg=request.form['msg'])
-
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -186,19 +182,15 @@ def home():
 def main():
     return render_template('home.html')
 
-
-# @app.route('/result/toss', methods=['POST'])
-# def result_toss():
-#     return redirect(url_for('result', msg=request.form['result']))
-
+@app.route('/result/toss', methods=['POST'])
+def result_toss():
+    return redirect(url_for('result', msg=request.form['result']))
 
 
-@app.route('/result')
+@app.route('/result', methods=['POST'])
 def result():
-    file_data = request.form['result']
+    file_data = request.form['msg']
     return render_template('result.html', data=file_data)
-
-
 
 
 
@@ -211,7 +203,7 @@ def result_api():
     print(path)
 
     try:
-        os.mkdir('/Users/sy/Desktop/pro2_Your_Day/your_today/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
+        os.mkdir('/Users/leeseongho/your_today_project/your_today_123/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
     except:
         a = 1
     file.save(path)  # 이미지 파일 저장
