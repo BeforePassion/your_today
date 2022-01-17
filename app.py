@@ -88,9 +88,11 @@ if check is None:
     feeling = ['happiness', 'angry', 'disgust', 'fear', 'neutral', 'sad', 'surprise']
     chicken = {}
     chicken_comment = ['행복한 기분, 묻고 더블로 가! 날개가득, 다리가득 콤보먹고 날라가거나 뛰어가자!', '화! 가날 땐, 화!끈한 매운맛 볼케이노 양념치킨!',
+
                        '세상이 싫은 당신에게 한 할아버지가 치킨을 건내면서 말을거네요, 우리깐부할까?', '벌써 2022년이라고..? 공포의 호랑이 해... 호랑이 ㅊ..치킨',
                        '나는 아무생각이 없다. 왜냐하면, 아무생각이 없기 때문이다. 생각없을 땐, 기본에 충실한 후라이드의 탑티어, 황금올리브치킨','눈물와락치킨',
                        '와우~ 어메이징~ 놀란 당신에게 추천하는 콘소~ 메이징 치킨!']
+
     chicken_img = ['happiness_chicken.png', 'angry_chicken.png', 'disgust_chicken.jpeg', 'fear_chicken.jpeg',
                    'neutral_chicken.png', 'sad_chicken.png', 'surprise_chicken.png']
 
