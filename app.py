@@ -47,6 +47,7 @@ data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?
                            headers=headers)  # 놀랄 때
 
 check = db.feeling_data.find_one({'feeling_num': 0})
+
 if check is None:
     soup_happiness = BeautifulSoup(data.text, 'html.parser')
     soup_angry = BeautifulSoup(data2.text, 'html.parser')
@@ -155,8 +156,10 @@ if check is None:
                 break
         movie['point'] = movie_point
 
+
         chicken['comment'] = chicken_comment[i]
         chicken['img'] = f'../static/image/{chicken_img[i]}'
+        print(f"{i}번째의 감정에 따른 치킨 저장했습니다.")
 
         db.feeling_data.insert_one({
             'feeling_num': i,
@@ -224,36 +227,40 @@ def result_api():
     pred_sorted.sort(reverse=True, key=lambda x: x[1])  # 원래의 값을 기준으로 내림차순 정렬
     print(pred_sorted[0], pred_sorted[1],pred_sorted[2])
 
+
     pred_top3 = pred_sorted[:3]
+    print(type(pred))
+
     return jsonify({'result': dumps(pred_top3)})
 
 
 @app.route('/result/recommend', methods=['POST'])
 def recommend():
     #result.html에서 값을 받음
-    receive_data = request.form['give_data']
+    receive_data = list(request.form['give_data'])
     print(receive_data,'됬냐?')
-    feeling_num_list = []
+    print(len(receive_data))
 
-    # fir_num = receive_data[4]
-    # sec_num = receive_data[]
+    fir_num = receive_data[2]
+    sec_num = receive_data[28]
+    thd_num = receive_data[54]
+    print(fir_num,sec_num,thd_num)
 
-    print(feeling_num_list, "너왜이래?")
     result = []
-    fir_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[0]})  # 1번째로 높은 값 가져오기
+    fir_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 1번째로 높은 값 가져오기
     result.append(fir_data)
-    sec_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[1]})  # 2번째로 높은 감정의 값들 가져오기
+    sec_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 2번째로 높은 감정의 값들 가져오기
     result.append(sec_data)
-    thd_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[2]})  # 3번째로 높은 감정의 값들 가져오기
+    thd_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 3번째로 높은 감정의 값들 가져오기
     result.append(thd_data)
 
     print(result)
 
     return jsonify({'result': dumps(result)})
 
-@app.route('/result/toss', methods=['POST'])
-def result_toss():
-    return redirect(url_for('result', msg=request.form['result']))
+# @app.route('/result/toss', methods=['POST'])
+# def result_toss():
+#     return redirect(url_for('result', msg=request.form['result']))
 
 
 @app.route('/result/result_chicken')
