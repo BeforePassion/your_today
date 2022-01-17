@@ -1,5 +1,7 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from datetime import datetime
+
+from keras.applications.mobilenet_v2 import decode_predictions
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 import certifi
@@ -11,20 +13,16 @@ import requests
 from bs4 import BeautifulSoup
 
 from pymongo import MongoClient
+from bson.json_util import dumps
 
-# model = tf.keras.models.load_model('static/model/first_training_data.h5')
-# print("model roaded")
-
+model = tf.keras.models.load_model('static/model/58_training_data.h5')
+print("model roaded")
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
 db = client.dbprojects
 
-
-headers = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-
-
-
-
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
 
 data = requests.get('https://music.bugs.co.kr/musicpd/albumview/39691', headers=headers)  # 기쁠 때
 data2 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50746', headers=headers)  # 화날 때
@@ -34,15 +32,20 @@ data5 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50793', headers
 data6 = requests.get('https://music.bugs.co.kr/musicpd/albumview/50839', headers=headers)  # 슬플 때
 data7 = requests.get('https://music.bugs.co.kr/musicpd/albumview/44402?wl_ref=list_mab_01', headers=headers)  # 놀랄 때
 
-
-data_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=6', headers=headers)  # 기쁠 때
-data1_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=19', headers=headers)  # 화날 때
-data2_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=15', headers=headers)  # 짜증날 때
-data3_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=11', headers=headers)  # 무서울 때
-data4_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=cur&date=20220113', headers=headers)  # 무표정일 때
-data5_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18', headers=headers)  # 슬플 때
-data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18', headers=headers)  # 놀랄 때
-
+data_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=6',
+                          headers=headers)  # 기쁠 때
+data1_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=19',
+                           headers=headers)  # 화날 때
+data2_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=15',
+                           headers=headers)  # 짜증날 때
+data3_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=11',
+                           headers=headers)  # 무서울 때
+data4_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=cur&date=20220113',
+                           headers=headers)  # 무표정일 때
+data5_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',
+                           headers=headers)  # 슬플 때
+data6_movie = requests.get('https://movie.naver.com/movie/sdb/rank/rmovie.naver?sel=pnt&date=20220113&tg=18',
+                           headers=headers)  # 놀랄 때
 
 check = db.feeling_data.find_one({'feeling_num': 0})
 if check is None:
@@ -84,9 +87,10 @@ if check is None:
     color = ['yellow', 'red', 'pink', 'black', 'gray', 'purple', 'blue']
     feeling = ['happiness', 'angry', 'disgust', 'fear', 'neutral', 'sad', 'surprise']
     chicken = {}
-    chicken_comment = ['"행복한 기분, 묻고 더블로 가!" 날개가득, 다리가득 콤보먹고 날라가거나 뛰어가자!', '화! 가날 땐, 화!끈한 매운맛 볼케이노 양념치킨!',
-                       '세상이 싫은 당신에게 한 할아버지가 치킨을 건내면서 말을거네요, "우리깐부할까?"', '벌써 2022년이라고..? 공포의 호랑이 해... 호랑치..ㅊ킨',
-                       '나는 아무생각이 없다. 왜냐하면, 아무생각이 없기 때문이다. 생각없을 땐, 기본에 충실한 후라이드의 탑티어, 황금올리브치킨', '와우~ 어메이징~ 놀란 당신에게 추천하는 콘소~ 메이징 치킨!']
+    chicken_comment = ['행복한 기분, 묻고 더블로 가! 날개가득, 다리가득 콤보먹고 날라가거나 뛰어가자!', '화! 가날 땐, 화!끈한 매운맛 볼케이노 양념치킨!',
+                       '세상이 싫은 당신에게 한 할아버지가 치킨을 건내면서 말을거네요, 우리깐부할까?', '벌써 2022년이라고..? 공포의 호랑이 해... 호랑이 ㅊ..치킨',
+                       '나는 아무생각이 없다. 왜냐하면, 아무생각이 없기 때문이다. 생각없을 땐, 기본에 충실한 후라이드의 탑티어, 황금올리브치킨','눈물와락치킨',
+                       '와우~ 어메이징~ 놀란 당신에게 추천하는 콘소~ 메이징 치킨!']
     chicken_img = ['happiness_chicken.png', 'angry_chicken.png', 'disgust_chicken.jpeg', 'fear_chicken.jpeg',
                    'neutral_chicken.png', 'sad_chicken.png', 'surprise_chicken.png']
 
@@ -116,7 +120,8 @@ if check is None:
         movie_img = []
         temp_urls = []
 
-        movie_title_list = emotion_movie.select('#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
+        movie_title_list = emotion_movie.select(
+            '#old_content > table.list_ranking > tbody > tr > td.title > div.tit5 > a')
         idx = 0
         for title in movie_title_list:
             if idx < 10:
@@ -126,7 +131,8 @@ if check is None:
                 temp_url += title.attrs['href']
                 temp_urls.append(temp_url)
                 idx += 1
-            else:break
+            else:
+                break
 
         # 영화 이미지, 줄거리
         for url in temp_urls:
@@ -145,13 +151,15 @@ if check is None:
             if idx < 10:
                 movie_point.append(point.text)
                 idx += 1
-            else: break
+            else:
+                break
         movie['point'] = movie_point
 
         chicken['comment'] = chicken_comment[i]
         chicken['img'] = f'../static/image/{chicken_img[i]}'
 
         db.feeling_data.insert_one({
+            'feeling_num': i,
             'feeling': feeling[i],
             'color': color[i],
             'img': img_list,
@@ -168,49 +176,70 @@ app = Flask(__name__)
 def home():
     return render_template('index.html')
 
+
 @app.route('/home')
 def main():
     return render_template('home.html')
 
-@app.route('/result')
+
+@app.route('/result', methods =['POST'])
 def result():
     return render_template('result.html')
+
 
 @app.route('/result/api', methods=['POST'])
 def result_api():
     # 이미지이기에, rescale 및 size 조정을 위해 ImageDataGenerator 활용
-    # test_datagen = ImageDataGenerator(rescale=1. / 255)
-    # test_dir = 'static/img/'     # test_dir에 폴더별로 사진을 저장 해야함
-    #
-    # test_generator = test_datagen.flow_from_directory(
-    #     test_dir,
-    #     target_size=(48, 48),
-    #     shuffle=False,
-    #     class_mode='categorical'
-    # )
-    # pred = model.predict(test_generator)[0].tolist()  # numpyarray를 list로 변환
-    # # 마지막으로 업로드한 사진에 대한 판별결과를 보여줌
-    # pred_sorted = []
-    # for idx, val in enumerate(pred):
-    #     pred_sorted.append((idx, val))  # 인덱스번호 부여
-    # pred_sorted.sort(reverse=True, key=lambda x: x[1])  # 원래의 값을 기준으로 내림차순 정렬
+    file = request.files['file_give']
 
-    result = list(db.feeling_data.find({}, {'_id': False}))  # 임시로 모든 데이터를 넣었습니다!
+    path = os.getcwd()+'/static/model/img/0/'+file.filename
+    print(path)
 
-    # fir_data = db.feeling_data.find_one({'feeling_num':pred_sorted[0][0]})  # 1번째로 높은 값 가져오기
-    # result.append(fir_data)
-    #
-    # sec_data = db.feeling_data.find_one({'feeling_num':pred_sorted[1][0]})  # 2번째로 높은 감정의 값들 가져오기
-    # result.append(sec_data)
-    #
-    # thd_data = db.feeling_data.find_one({'feeling_num':pred_sorted[2][0]})  # 3번째로 높은 감정의 값들 가져오기
-    # result.append(thd_data)
+    try:
+        os.mkdir('/Users/sy/Desktop/pro2_Your_Day/your_today/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
+    except:
+        a = 1
+    file.save(path)  # 이미지 파일 저장
+    #os.system('rm -rf /Users/sy/Desktop/pro2_Your_Day/your_today/static/model/img/0') 강제삭제
 
-    return jsonify({'result': result})
+
+    test_datagen = ImageDataGenerator(rescale=1. / 255)
+    test_dir = 'static/model/img/'  # test_dir에 폴더별로 사진을 저장 해야함
+
+    test_generator = test_datagen.flow_from_directory(
+        test_dir,
+        target_size=(224, 224),
+        shuffle=False,
+        class_mode='categorical'
+    )
+
+    pred = model.predict(test_generator)[0].tolist()  # numpyarray를 list로 변환
+    # 마지막으로 업로드한 사진에 대한 판별결과를 보여줌
+    pred_sorted = []
+    for idx, val in enumerate(pred):
+        pred_sorted.append((idx, val))  # 인덱스번호 부여
+    pred_sorted.sort(reverse=True, key=lambda x: x[1])  # 원래의 값을 기준으로 내림차순 정렬
+    print(pred_sorted[0], pred_sorted[1],pred_sorted[2])
+    result = []
+    fir_data = db.feeling_data.find_one({'feeling_num':pred_sorted[0][0]})  # 1번째로 높은 값 가져오기
+    result.append(fir_data)
+
+    sec_data = db.feeling_data.find_one({'feeling_num':pred_sorted[1][0]})  # 2번째로 높은 감정의 값들 가져오기
+    result.append(sec_data)
+
+    thd_data = db.feeling_data.find_one({'feeling_num':pred_sorted[2][0]})  # 3번째로 높은 감정의 값들 가져오기
+    result.append(thd_data)
+
+
+
+    # result = list(db.feeling_data.find({}, {'_id': False}))  # 임시로 모든 데이터를 넣었습니다!
+    return jsonify({'result': dumps(result)})
+
 
 @app.route('/result/result_chicken')
 def result_chicken():
     return render_template('result_chicken.html')
+
 
 @app.route('/result/second')
 def result_second():
