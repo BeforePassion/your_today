@@ -20,20 +20,20 @@ inputImage.addEventListener("change", e => {
 })
 
 function posting() {
-    let file = $('#file')[0].files[0]
+    let file = $('#chooseFile')[0].files[0]
     let form_data = new FormData()
 
     form_data.append("file_give", file)
     console.log(file.give)
     $.ajax({
         type: "POST",
-        url: "/home/analyze",
+        url: "/result/api",
         data: form_data,
         cache: false,
         contentType: false,
         processData: false,
         success: function (response) {
-            alert(response["result"])
+            console.log(response["result"])
             // 아래처럼 하지 않아도, 백엔드(app.py)에서 바로 판별 함수를 실행한 뒤에
             // render_template 을 해서 바로 결과 페이지로 넘어가도 됨
 
