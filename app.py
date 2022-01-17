@@ -14,6 +14,7 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from bson.json_util import dumps
 
+
 model = tf.keras.models.load_model('static/model/58_training_data.h5')
 print("model roaded")
 

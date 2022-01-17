@@ -40,14 +40,15 @@ function posting() {
         success: function (response) {
             console.log(response["result"])
             data_cart = response["result"]
-
-            let first_feeling = data_cart[2]
-            let second_feeling = data_cart[27]
-            let third_feeling = data_cart[43]
+            let recon = data_cart.replace(/\[/g, '').replace(/\]/g, '').split(',')
+            let first_feeling = recon[0]
+            let second_feeling = recon[2]
+            let third_feeling = recon[4]
             let feeling = [first_feeling, second_feeling, third_feeling]
 
             let feel = []
             for (i = 0; i < feeling.length; i++) {
+                console.log(feeling[i])
                 if (feeling[i] == 0) {
                     let happiness = '행복'
                     feel.push(happiness)
