@@ -13,6 +13,7 @@
 </head>
 
 <script>
+    var get_result_data = '{{msg}}';
     window.onload = function get_data() {
         $.ajax({
             type: "POST",
@@ -22,32 +23,36 @@
                 console.log(data['result'])
                 let show_data = data['result'][0]  //어떻게 오지
                 let color = show_data['color']
-                let temp_html1 = `<div class="color_circle" style="background-color: ${color}"></div>
-                                    <div class="color_comment">오늘 당신의 색깔은 ${color}</div>`
+                let temp_html1 = `<img src="../static/image/color.jpeg" alt="색깔 타이틀">
+                                    <div class="color_container_body">
+                                        <div class="background_color_space" style="background-color: ${color}">
+                                            <div class="img_circle">
+                                                <img class="question_img"src="../static/image/guess.png" alt="색깔">
+                                                <div class="color_name">${color}</div>
+                                            </div>
+                                        </div>
+                                    </div>`
                 $('#color_container').append(temp_html1);
-                for (let i = 0; i < 5; i++) {
+                for (let i = 0; i < 10; i++) {
                     let music_title = show_data['title'][i]
                     let music_img_src = show_data['img'][i]
                     let music_singer = show_data['singer'][i]
                     let temp_html2 = `<div class="music_wrapper">
-                                        <img class="music_img" src="${music_img_src}">
-                                        <div class="title">${music_title}</div>
-                                        <div class="singer">${music_singer}</div>
-                                        </img>
-                                    </div>`
+                                            <img src="${music_img_src}"/>
+                                            <span>${music_title}</span>
+                                            <span>${music_singer}</span>
+                                        </div>`
                     $('#music_container').append(temp_html2);
                 }
-                for (let i = 0; i < 5; i++) {
-                    let movie_title = show_data['title'][i]
-                    let movie_img_src = show_data['img'][i]
-                    let movie_point = show_data['point'][i]
-                    let temp_html3 = `<div class="movie_container">
-                                        <div class="movie_wrapper">
-                                            <img class="movie_img" src="${movie_img_src}">
-                                            <div class="movie_title">${movie_title}</div>
-                                            <div class="movie_point">${movie_point}</div>
-                                        </div>
-                                    </div>`
+                for (let i = 0; i < 10; i++) {
+                    let movie = show_data['movie']
+                    let movie_title = movie['title'][i]
+                    let movie_img_src = movie['img'][i]
+                    let movie_point = movie['point'][i]
+                    let temp_html3 = `<span class="movie_wrapper">
+                                        <img src="${movie_img_src}"/>
+                                        <span>${movie_title}</span>
+                                        <span>평점: ${movie_point}</span>`
                     $('#movie_container').append(temp_html3);
                 }
             }
@@ -57,18 +62,6 @@
 </script>
 
 <body>
-<!--이 부분은 데이터 받아와서 표시하는 부분-->
-<!--<div class="container">-->
-<!--    <div class="color_container" id="color_container"></div>-->
-<!--    <div class="music_container" id="music_container"></div>-->
-<!--    <div class="movie_container" id="movie_container"></div>-->
-<!--    <div class="button_wrapper">-->
-<!--        <button type="button" class="second_button" onclick="location.href='/result/second'">NEXT</button>-->
-<!--    </div>-->
-<!--</div>-->
-
-
-<!--이 부분은 css 작업하려고 그냥 만들어놓은 부분. 마지막에 삭제-->
 
 <div id="wrapper">
     <div class="status-bar">
@@ -81,57 +74,15 @@
         </div>
     </div>
     <div class="container">
-        <div class="color_container" id="color_wrapper">
-            <img src="../static/image/color.jpeg" alt="색깔 타이틀">
-            <div class="color_container_body">
-                <img src="../static/image/guess.png" alt="색깔">
-                <p>오늘 당신의 색깔은 {}입니다.</p>
-            </div>
-        </div>
-        <div class="music_container" id="music_container">
-            <div class="music_wrapper">
-                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
-                <span>제목</span>
-                <span>가수</span>
-            </div>
-            <div class="music_wrapper">
-                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
-                <span>제목</span>
-                <span>가수</span>
-            </div>
-            <div class="music_wrapper">
-                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
-                <span>제목</span>
-                <span>가수</span>
-            </div>
-            <div class="music_wrapper">
-                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
-                <span>제목</span>
-                <span>가수</span>
-            </div>
-            <div class="music_wrapper">
-                <img src="https://image.bugsm.co.kr/album/images/50/9921/992177.jpg?version=20200820002349.0"/>
-                <span>제목</span>
-                <span>가수</span>
-            </div>
-        </div>
-        <div class="movie_container">
-            <div class="movie_wrapper">
-                <img class="movie_img"
-                     src="">
-                <div class="movie_title">영화제목</div>
-                <div class="movie_point">평점</div>
-            </div>
-        </div>
-
-        <button class="button_wrapper" type="button" onclick="window.location.href='/result/result_chicken'">NEXT</button>
-
-        <!--이 부분은 css 작업하려고 그냥 만들어놓은 부분. 마지막에 삭제-->
+        <div class="color_container" id="color_container"></div>
+        <p style="font-size: 30px; font-weight: bold">오늘 이 노래 어때요?</p>
+        <div class="music_container" id="music_container"></div>
+        <p style="font-size: 30px; font-weight: bold">오늘 이 영화 어때요?</p>
+        <div class="movie_container" id="movie_container"></div>
+        <button class="button_wrapper" type="button" onclick="window.location.href='/result/result_chicken'">NEXT
+        </button>
     </div>
 </div>
-
-
-
 
 <script src="../static/js/time.js"></script>
 </body>

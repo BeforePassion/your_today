@@ -3,6 +3,7 @@
 @import 'result_chicken.css';
 @import 'status-bar.css';
 @import 'result.css';
+@import 'second.css';
 
 * {
     font-family: 'Nanum Pen Script', cursive;
