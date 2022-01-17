@@ -1,10 +1,9 @@
-
 var data_cart;
 
 
 function loadFile(input) {
     // 인풋 태그에 파일이 있는 경우
-    if(input.files && input.files[0]) {
+    if (input.files && input.files[0]) {
         // 이미지 파일인지 검사 (생략)
         // FileReader 인스턴스 생성
         const reader = new FileReader()
@@ -17,6 +16,7 @@ function loadFile(input) {
         reader.readAsDataURL(input.files[0])
     }
 }
+
 // input file에 change 이벤트 부여
 const inputImage = document.getElementById("chooseFile")
 inputImage.addEventListener("change", e => {
@@ -40,19 +40,56 @@ function posting() {
         success: function (response) {
             console.log(response["result"])
             data_cart = response["result"]
-            // 아래처럼 하지 않아도, 백엔드(app.py)에서 바로 판별 함수를 실행한 뒤에
-            // render_template 을 해서 바로 결과 페이지로 넘어가도 됨
+
+            let first_feeling = data_cart[2]
+            let second_feeling = data_cart[27]
+            let third_feeling = data_cart[43]
+            let feeling = [first_feeling, second_feeling, third_feeling]
+
+            let feel = []
+            for (i = 0; i < feeling.length; i++) {
+                if (feeling[i] == 0) {
+                    let happiness = '행복'
+                    feel.push(happiness)
+                }
+                else if (feeling[i] == 1) {
+                    let angry = '분노'
+                    feel.push(angry)
+                }
+                else if (feeling[i] == 2) {
+                    let disgust = '짜증'
+                    feel.push(disgust)
+                }
+                else if (feeling[i] == 3) {
+                    let fear = '공포'
+                    feel.push(fear)
+                }
+                else if (feeling[i] == 4) {
+                    let neutral = '무념'
+                    feel.push(neutral)
+                }
+                else if (feeling[i] == 5) {
+                    let sad = '슬픔'
+                    feel.push(sad)
+                }
+                else if (feeling[i] == 6) {
+                    let surprise = '놀람'
+                    feel.push(surprise)
+                }
+            }
+            let temp_html = `<p>${feel}</p>`
+            $('#feeling_text').append(temp_html);
 
         }
     });
-  }
+}
 
-  function preview() {
+function preview() {
     let frame = $('#frame');
-    frame.src=URL.createObjectURL(event.target.files[0]);
+    frame.src = URL.createObjectURL(event.target.files[0]);
     frame.style.display = 'block';
-  }
+}
 
-function test(){
-    $.redirect('/result', {msg:data_cart});
+function test() {
+    $.redirect('/result/api', {msg: data_cart});
 }

@@ -202,7 +202,7 @@ def result_api():
     print(path)
 
     try:
-        os.mkdir('/Users/sy/Desktop/pro2_Your_Day/your_today/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
+        os.mkdir('/Users/nahyunkim/Desktop/my_git_story/your_today/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
     except:
         a = 1
     file.save(path)  # 이미지 파일 저장
@@ -238,7 +238,7 @@ def result_api():
 def recommend():
     #result.html에서 값을 받음
     receive_data = list(request.form['give_data'])
-    print(receive_data,'됬냐?')
+    print(receive_data,'됐냐?')
     print(len(receive_data))
 
     fir_num = receive_data[2]
