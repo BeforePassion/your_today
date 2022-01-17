@@ -1,7 +1,6 @@
 from flask import Flask, render_template, jsonify, request, session, redirect, url_for
 from datetime import datetime
 
-
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import tensorflow as tf
 import certifi
@@ -187,15 +186,19 @@ def home():
 def main():
     return render_template('home.html')
 
+
 # @app.route('/result/toss', methods=['POST'])
 # def result_toss():
 #     return redirect(url_for('result', msg=request.form['result']))
+
 
 
 @app.route('/result')
 def result():
     file_data = request.form['result']
     return render_template('result.html', data=file_data)
+
+
 
 
 
