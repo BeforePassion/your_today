@@ -14,14 +14,15 @@
 
 <script>
     var get_result_data = '{{msg}}';
+    console.log(get_result_data)
     window.onload = function get_data() {
         $.ajax({
             type: "POST",
-            url: "/result/api",
-            data: {},
+            url: "/result/recommend",
+            data: {'give_data':get_result_data},
             success: function (data) {
                 console.log(data['result'])
-                let show_data = data['result'][0]  //어떻게 오지
+                let show_data = data['msg'][0]  //어떻게 오지
                 let color = show_data['color']
                 let temp_html1 = `<img src="../static/image/color.jpeg" alt="색깔 타이틀">
                                     <div class="color_container_body">

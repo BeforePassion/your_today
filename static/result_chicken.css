@@ -57,7 +57,8 @@ body {
 }
 
 @keyframes rotate-scale-down {
-  50% {
-    -webkit-transform: scale(0.5) rotateZ(0);
-            transform: scale(0.5) rotateZ(0);
-  }
+    50% {
+        -webkit-transform: scale(0.5) rotateZ(0);
+        transform: scale(0.5) rotateZ(0);
+    }
+}

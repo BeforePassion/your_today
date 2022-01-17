@@ -172,10 +172,7 @@ if check is None:
 app = Flask(__name__)
 
 
-@app.route('/result', methods=['POST'])
-def result():
-    #print(request.form['msg'])
-    return render_template('result.html', msg=request.form['msg'])
+
 
 @app.route('/')
 def home():
@@ -186,15 +183,11 @@ def home():
 def main():
     return render_template('home.html')
 
-# @app.route('/result/toss', methods=['POST'])
-# def result_toss():
-#     return redirect(url_for('result', msg=request.form['result']))
 
-@app.route('/result')
+@app.route('/result', methods=['POST'])
 def result():
-    file_data = request.form['result']
-    return render_template('result.html', data=file_data)
-
+    print(request.form['msg'])  #Feeling_num을 넘겨줘서 이걸로 데이터 검색 후 다시 전송
+    return render_template('result.html', msg=request.form['msg'])
 
 
 @app.route('/result/api', methods=['POST'])
@@ -230,19 +223,32 @@ def result_api():
         pred_sorted.append((idx, val))  # 인덱스번호 부여
     pred_sorted.sort(reverse=True, key=lambda x: x[1])  # 원래의 값을 기준으로 내림차순 정렬
     print(pred_sorted[0], pred_sorted[1],pred_sorted[2])
+
+    pred_top3 = pred_sorted[:3]
+    return jsonify({'result': dumps(pred_top3)})
+
+
+@app.route('/result/recommend', methods=['POST'])
+def recommend():
+    #result.html에서 값을 받음
+    receive_data = request.form['give_data']
+    print(receive_data,'됬냐?')
+    feeling_num_list = []
+
+    # fir_num = receive_data[4]
+    # sec_num = receive_data[]
+
+    print(feeling_num_list, "너왜이래?")
     result = []
-    fir_data = db.feeling_data.find_one({'feeling_num':pred_sorted[0][0]})  # 1번째로 높은 값 가져오기
+    fir_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[0]})  # 1번째로 높은 값 가져오기
     result.append(fir_data)
-
-    sec_data = db.feeling_data.find_one({'feeling_num':pred_sorted[1][0]})  # 2번째로 높은 감정의 값들 가져오기
+    sec_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[1]})  # 2번째로 높은 감정의 값들 가져오기
     result.append(sec_data)
-
-    thd_data = db.feeling_data.find_one({'feeling_num':pred_sorted[2][0]})  # 3번째로 높은 감정의 값들 가져오기
+    thd_data = db.feeling_data.find_one({'feeling_num':feeling_num_list[2]})  # 3번째로 높은 감정의 값들 가져오기
     result.append(thd_data)
 
+    print(result)
 
-
-    # result = list(db.feeling_data.find({}, {'_id': False}))  # 임시로 모든 데이터를 넣었습니다!
     return jsonify({'result': dumps(result)})
 
 @app.route('/result/toss', methods=['POST'])
