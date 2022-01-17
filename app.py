@@ -181,10 +181,15 @@ def home():
 def main():
     return render_template('home.html')
 
+@app.route('/result/toss', methods=['POST'])
+def result_toss():
+    return redirect(url_for('result', msg=request.form['result']))
 
-@app.route('/result', methods =['POST'])
+
+@app.route('/result')
 def result():
     return render_template('result.html')
+
 
 
 @app.route('/result/api', methods=['POST'])

@@ -1,4 +1,4 @@
-var data_cart
+var data_cart;
 
 
 function loadFile(input) {
@@ -28,8 +28,6 @@ function posting() {
 
     form_data.append("file_give", file)
     console.log(file.give)
-    data_cart = form_data
-
 
     $.ajax({
         type: "POST",
@@ -40,7 +38,7 @@ function posting() {
         processData: false,
         success: function (response) {
             console.log(response["result"])
-
+            data_cart = response["result"]
             // 아래처럼 하지 않아도, 백엔드(app.py)에서 바로 판별 함수를 실행한 뒤에
             // render_template 을 해서 바로 결과 페이지로 넘어가도 됨
 
@@ -58,11 +56,8 @@ function posting() {
 
     $.ajax({
         type: "POST",
-        url: "/result",
-        data: data_cart,
-        cache: false,
-        contentType: false,
-        processData: false,
+        url: "/result/toss",
+        data: {'result':data_cart},
         success: function (response) {
             console.log(response["result"])
             // 아래처럼 하지 않아도, 백엔드(app.py)에서 바로 판별 함수를 실행한 뒤에
