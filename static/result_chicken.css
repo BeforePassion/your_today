@@ -21,10 +21,10 @@ body {
 
 
 
-#chicken-container
-.chicken-container-desc {
+#chicken-container .chicken-container-desc {
     font-size: 26px;
     margin-bottom: 20px;
+    padding: 12px;
 }
 
 .chicken-container_button > button{
