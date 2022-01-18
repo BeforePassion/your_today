@@ -173,6 +173,7 @@
     align-items: center;
     padding: 10px;
     text-align: center;
+    border-bottom: 1px solid #c4c4c4;
 }
 
 .music_container .music_wrapper > img {
