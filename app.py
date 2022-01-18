@@ -7,6 +7,7 @@ import certifi
 import numpy as np
 from PIL import Image
 import os
+import shutil
 
 import requests
 from bs4 import BeautifulSoup
@@ -15,7 +16,7 @@ from pymongo import MongoClient
 from bson.json_util import dumps
 
 
-model = tf.keras.models.load_model(os.getcwd()+'\\static\\model\\58_training_data.h5')
+model = tf.keras.models.load_model(os.getcwd()+'/static/model/58_training_data.h5')
 print("model roaded")
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
@@ -159,7 +160,7 @@ if check is None:
 
 
         chicken['comment'] = chicken_comment[i]
-        chicken['img'] = os.getcwd()+f'\\static\\image\\{chicken_img[i]}'
+        chicken['img'] = os.getcwd()+f'/static/image/{chicken_img[i]}'
         print(f"{i}번째의 감정에 따른 치킨 저장했습니다.")
 
         db.feeling_data.insert_one({
@@ -199,11 +200,11 @@ def result_api():
     # 이미지이기에, rescale 및 size 조정을 위해 ImageDataGenerator 활용
     file = request.files['file_give']
 
-    path = os.getcwd()+'\\static\\model\\img\\0\\'+file.filename
+    path = os.getcwd()+'/static/model/img/0/'+file.filename
     print(path)
 
     try:
-        os.mkdir(os.getcwd()+'\\static\\model\\img\\0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
+        os.mkdir(os.getcwd()+'/static/model/img/0')  # 업로드한 사진 이름으로 폴더(test_dir를 위한 개별 폴더 생성) 생성
     except:
         a = 1
     file.save(path)  # 이미지 파일 저장
@@ -211,7 +212,7 @@ def result_api():
 
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
-    test_dir = os.getcwd()+'\\static\\model\\img\\'  # test_dir에 폴더별로 사진을 저장 해야함
+    test_dir = os.getcwd()+'/static/model/img/'  # test_dir에 폴더별로 사진을 저장 해야함
 
     test_generator = test_datagen.flow_from_directory(
         test_dir,
@@ -228,9 +229,11 @@ def result_api():
     pred_sorted.sort(reverse=True, key=lambda x: x[1])  # 원래의 값을 기준으로 내림차순 정렬
     print(pred_sorted[0], pred_sorted[1],pred_sorted[2])
 
-
     pred_top3 = pred_sorted[:3]
     print(type(pred))
+
+    remove_str = os.getcwd() + '/static/model/img/0'
+    shutil.rmtree(remove_str)
 
     return jsonify({'result': dumps(pred_top3)})
 
@@ -276,4 +279,4 @@ def result_second():
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5000, debug=True)
+    app.run('0.0.0.0', port=5007, debug=True)
