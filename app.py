@@ -14,7 +14,8 @@ from bs4 import BeautifulSoup
 from pymongo import MongoClient
 from bson.json_util import dumps
 
-model = tf.keras.models.load_model('static/model/58_training_data.h5')
+
+model = tf.keras.models.load_model(os.getcwd()+'\\static\\model\\58_training_data.h5')
 print("model roaded")
 
 client = MongoClient('mongodb+srv://test:sparta@cluster0.i0lgb.mongodb.net/test')
@@ -158,7 +159,7 @@ if check is None:
 
 
         chicken['comment'] = chicken_comment[i]
-        chicken['img'] = f'../static/image/{chicken_img[i]}'
+        chicken['img'] = os.getcwd()+f'\\static\\image\\{chicken_img[i]}'
         print(f"{i}번째의 감정에 따른 치킨 저장했습니다.")
 
         db.feeling_data.insert_one({
@@ -186,7 +187,6 @@ def home():
 def main():
     return render_template('home.html')
 
-@app.route('/result', methods=['POST'])
 def result():
     print(request.form['msg'])  #Feeling_num을 넘겨줘서 이걸로 데이터 검색 후 다시 전송
     return render_template('result.html', msg=request.form['msg'])
@@ -209,6 +209,7 @@ def result_api():
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
     test_dir = os.getcwd()+'\static\\model/img\\'  # test_dir에 폴더별로 사진을 저장 해야함
+    test_dir = os.getcwd()+'\\static\\model\\img\\'  # test_dir에 폴더별로 사진을 저장 해야함
     test_generator = test_datagen.flow_from_directory(
         test_dir,
         target_size=(224, 224),
@@ -234,25 +235,25 @@ def result_api():
 @app.route('/result/recommend', methods=['POST'])
 def recommend():
     #result.html에서 값을 받음
-    receive_data = list(request.form['give_data'])
-    print(receive_data,'됬냐?')
+    receive_data = (request.form['give_data'])
+    print(receive_data,'됐냐?')
     print(len(receive_data))
-
-    fir_num = receive_data[2]
-    sec_num = receive_data[28]
-    thd_num = receive_data[54]
+    list_receive_data = receive_data.replace('[','').replace(']','').replace(' ','').split(',')
+    print(list_receive_data)
+    fir_num = list_receive_data[0]
+    sec_num = list_receive_data[2]
+    thd_num = list_receive_data[4]
     print(fir_num,sec_num,thd_num)
 
     result = []
     fir_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 1번째로 높은 값 가져오기
     result.append(fir_data)
-    sec_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 2번째로 높은 감정의 값들 가져오기
+    sec_data = db.feeling_data.find_one({'feeling_num': int(sec_num)})  # 2번째로 높은 감정의 값들 가져오기
     result.append(sec_data)
-    thd_data = db.feeling_data.find_one({'feeling_num': int(fir_num)})  # 3번째로 높은 감정의 값들 가져오기
+    thd_data = db.feeling_data.find_one({'feeling_num': int(thd_num)})  # 3번째로 높은 감정의 값들 가져오기
     result.append(thd_data)
 
-    print(result)
-
+    #print(result)
     return jsonify({'result': dumps(result)})
 
 # @app.route('/result/toss', methods=['POST'])
@@ -260,15 +261,16 @@ def recommend():
 #     return redirect(url_for('result', msg=request.form['result']))
 
 
-@app.route('/result/result_chicken')
+@app.route('/result/result_chicken', methods=['POST', 'GET'])
 def result_chicken():
-    return render_template('result_chicken.html')
+#    print(request.form['msg'])  #Feeling_num을 넘겨줘서 이걸로 데이터 검색 후 다시 전송
+    return render_template('result_chicken.html', result=request.form['msg'])
 
 
-@app.route('/result/second')
+@app.route('/result/second', methods=['POST', 'GET'])
 def result_second():
-    return render_template('second.html')
+    return render_template('second.html', result=request.form['msg'])
 
 
 if __name__ == '__main__':
-    app.run('0.0.0.0', port=5004, debug=False)
+    app.run('0.0.0.0', port=5000, debug=True)

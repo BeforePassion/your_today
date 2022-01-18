@@ -119,6 +119,11 @@ label {
     cursor: pointer;
 }
 
+#home-container_recommend {
+    display: flex;
+    justify-content: center;
+}
+
 .home-container_body {
     display: flex;
     flex-direction: column;
@@ -126,11 +131,12 @@ label {
     margin-bottom: 50px;
 }
 
-.home-container_body > p:first-child {
+#feeling_ment {
     font-size: 45px;
 }
 
-.home-container_body > p:nth-child(2) {
+#feeling_text {
     margin-top: -20px;
     font-size: 30px;
+    text-align: center;
 }

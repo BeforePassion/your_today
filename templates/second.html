@@ -13,15 +13,17 @@
 </head>
 
 <script>
+    var get_result_data = '{{result}}';
+	var test_var;
     window.onload = function get_data() {
         $.ajax({
             type: "POST",
-            url: "/result/api",
-            data: {},
+            url: "/result/recommend",
+            data: {'give_data':get_result_data},
             success: function (data) {
+		get_data_json = JSON.parse(data['result']);
+		test_var = get_data_json;
                 console.log(data['result'])
-                //
-                //
                 let else_data_1 = data['result'][1]
                 for (let i = 0; i < 10; i++) {
                     let music_title = else_data_1['title'][i]
