@@ -12,25 +12,8 @@
     <script src="../static/js/redirect.js"></script>
 <script>
 var test_var;
-    var get_result_data = '{{result}}';
-    window.onload = function get_data() {
-        $.ajax({
-            type: "POST",
-            url: "/result/recommend",
-            data: {'give_data':get_result_data},
-            success: function (data) {
-		get_data_json = JSON.parse(data['result']);
-		test_var = get_data_json;
-	    }
-	})
-	chicken_display();
-    };
-    function test2() {
-        $.redirect('/result/second', {msg: get_result_data});
-    }
 function chicken_display() {
 //                let chicken = test_var['result']
-                console.log(data)
 		let chicken = test_var[0]['chicken']
                 let chicken_pic = chicken['img']
                 let chicken_desc = chicken['comment']
@@ -50,6 +33,22 @@ function chicken_display() {
                 </div>`
 		$('#chickchichkchick').append(temp_html);
 }
+    var get_result_data = '{{result}}';
+    window.onload = function get_data() {
+        $.ajax({
+            type: "POST",
+            url: "/result/recommend",
+            data: {'give_data':get_result_data},
+            success: function (data) {
+		get_data_json = JSON.parse(data['result']);
+		test_var = get_data_json;
+		chicken_display();
+	    }
+	})
+    };
+    function test2() {
+        $.redirect('/result/second', {msg: get_result_data});
+    }
 </script>
 </head>
 <body>
