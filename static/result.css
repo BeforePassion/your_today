@@ -35,6 +35,9 @@
 .img_circle {
     height: 60%;
     width: 50%;
+    max-width: 250px;
+    max-height: 250px;
+    position: relative;
 }
 
 .question_img {
