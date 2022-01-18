@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
     <script src="../static/js/redirect.js"></script>
+
 </head>
 <body>
     <div id="wrapper">
@@ -39,11 +40,10 @@
                         <input type="file" id="chooseFile" name="chooseFile" accept="image/*" onchange="loadFile(this)">
                     </form>
                     <div class="home-container_button">
-                        <button onclick="posting()" class="submitButton" id="submitButton">오늘 내 기분은 🤔</button>
+                        <button onclick="posting() ; this.onclick=null;" class="submitButton" id="submitButton">오늘 내 기분은 🤔</button>
                     </div>
                 </div>
             </div>
-
             <div class="home-container_body" id="feeling">
                 <div id="feeling_ment">
                     <p>오늘 당신의 기분은!</p>

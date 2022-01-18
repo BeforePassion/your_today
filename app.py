@@ -194,7 +194,6 @@ def result():
     print(request.form['msg'])  #Feeling_num을 넘겨줘서 이걸로 데이터 검색 후 다시 전송
     return render_template('result.html', msg=request.form['msg'])
 
-
 @app.route('/result/api', methods=['POST'])
 def result_api():
     # 이미지이기에, rescale 및 size 조정을 위해 ImageDataGenerator 활용
