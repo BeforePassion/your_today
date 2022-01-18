@@ -92,5 +92,5 @@ function preview() {
 }
 
 function test() {
-    $.redirect('/result/api', {msg: data_cart});
+    $.redirect('/result', {msg: data_cart});
 }
