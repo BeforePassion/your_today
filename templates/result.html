@@ -9,12 +9,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="../static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <script src="../static/js/redirect.js"></script>
     <title>너의 오늘</title>
 </head>
 
 <script>
     var get_result_data = '{{msg}}';
-    console.log(get_result_data)
+	var test_var;
     window.onload = function get_data() {
         $.ajax({
             type: "POST",
@@ -22,8 +23,12 @@
             data: {'give_data':get_result_data},
             success: function (data) {
                 console.log(data['result'])
-                let show_data = data['msg'][0]  //어떻게 오지
-                let color = show_data['color']
+		get_data_json = JSON.parse(data['result']);
+		test_var = get_data_json;
+		let color = get_data_json[0]['color']
+		console.log(color)
+                //let show_data = data['result'][0]  //어떻게 오지
+                //let color = show_data['color']
                 let temp_html1 = `<img src="../static/image/color.jpeg" alt="색깔 타이틀">
                                     <div class="color_container_body">
                                         <div class="background_color_space" style="background-color: ${color}">
@@ -35,9 +40,9 @@
                                     </div>`
                 $('#color_container').append(temp_html1);
                 for (let i = 0; i < 10; i++) {
-                    let music_title = show_data['title'][i]
-                    let music_img_src = show_data['img'][i]
-                    let music_singer = show_data['singer'][i]
+                    let music_title = get_data_json[0]['title'][i]
+                    let music_img_src = get_data_json[0]['img'][i]
+                    let music_singer = get_data_json[0]['singer'][i]
                     let temp_html2 = `<div class="music_wrapper">
                                             <img src="${music_img_src}"/>
                                             <span>${music_title}</span>
@@ -45,8 +50,8 @@
                                         </div>`
                     $('#music_container').append(temp_html2);
                 }
+                let movie = get_data_json[0]['movie'];
                 for (let i = 0; i < 10; i++) {
-                    let movie = show_data['movie']
                     let movie_title = movie['title'][i]
                     let movie_img_src = movie['img'][i]
                     let movie_point = movie['point'][i]
@@ -59,7 +64,9 @@
             }
         })
     }
-
+    function test2() {
+        $.redirect('/result/result_chicken', {msg: get_result_data}, method="POST");
+    }
 </script>
 
 <body>
@@ -80,7 +87,7 @@
         <div class="music_container" id="music_container"></div>
         <p style="font-size: 30px; font-weight: bold">오늘 이 영화 어때요?</p>
         <div class="movie_container" id="movie_container"></div>
-        <button class="button_wrapper" type="button" onclick="window.location.href='/result/result_chicken'">NEXT
+        <button class="button_wrapper" type="button" onclick="test2()">NEXT
         </button>
     </div>
 </div>

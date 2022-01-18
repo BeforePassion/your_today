@@ -9,7 +9,47 @@
     <title>너의 오늘</title>
     <link rel="stylesheet" href="../static/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap" rel="stylesheet">
+    <script src="../static/js/redirect.js"></script>
+<script>
+var test_var;
+function chicken_display() {
+//                let chicken = test_var['result']
+		let chicken = test_var[0]['chicken']
+                let chicken_pic = chicken['img']
+                let chicken_desc = chicken['comment']
 
+                let temp_html = `<div class="chicken-container_img">
+                    <img style="max-width: 500px; max-height: 500px; width: 47vw; height: 47vw; border-radius: 20px; border: 3px solid black; margin-bottom: 20px; padding: 60px" id="preview-image" src="${chicken_pic}">
+                </div>
+                <div class="chicken-container-ment">
+                    <img style="max-width: 300px; max-height: 60px; width: 60vw; height: 10vw;" src="../static/image/pullchicken.jpeg" alt="멘트">
+                </div>
+                <div class="chicken-container-desc">
+                    <p>${chicken_desc}</p>
+                </div>
+                <div class="chicken-container_button">
+                    <button style="font-size: 24px;" onclick="test2()">
+                        이것도 싫다구욧!?</button>
+                </div>`
+		$('#chickchichkchick').append(temp_html);
+}
+    var get_result_data = '{{result}}';
+    window.onload = function get_data() {
+        $.ajax({
+            type: "POST",
+            url: "/result/recommend",
+            data: {'give_data':get_result_data},
+            success: function (data) {
+		get_data_json = JSON.parse(data['result']);
+		test_var = get_data_json;
+		chicken_display();
+	    }
+	})
+    };
+    function test2() {
+        $.redirect('/result/second', {msg: get_result_data});
+    }
+</script>
 </head>
 <body>
     <div id="wrapper">
@@ -26,8 +66,8 @@
             <div class="chicken-container-logo">
                 <img style="max-width: 300px; max-height: 100px; width: 50vw; height: 17vw;" src="../static/image/chickenlogo.png" alt="로고">
             </div>
-            <div class="chicken-container_title">
-                <div class="chicken-container_img">
+            <div class="chicken-container_title" id='chickchichkchick'>
+                <!--div class="chicken-container_img">
                     <img style="max-width: 500px; max-height: 500px; width: 47vw; height: 47vw; border-radius: 20px; border: 3px solid black; margin-bottom: 20px; padding: 60px" id="preview-image" src="../static/image/guess.png">
                 </div>
                 <div class="chicken-container-ment">
@@ -37,9 +77,9 @@
                     <p>치킨설명</p>
                 </div>
                 <div class="chicken-container_button">
-                    <button style="font-size: 24px;" onclick="window.location.href='/result/second'">
+                    <button style="font-size: 24px;" onclick="test2()">
                         이것도 싫다구욧!?</button>
-                </div>
+                </div-->
             </div>
         </div>
     </div>
