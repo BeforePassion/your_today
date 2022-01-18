@@ -24,7 +24,7 @@
 		get_data_json = JSON.parse(data['result']);
 		test_var = get_data_json;
                 console.log(data['result'])
-                let else_data_1 = data['result'][1]
+                let else_data_1 = test_var[1]
                 for (let i = 0; i < 10; i++) {
                     let music_title = else_data_1['title'][i]
                     let music_img_src = else_data_1['img'][i]
@@ -47,7 +47,7 @@
                                         <span>평점: ${movie_point}</span>`
                     $('#movie_container_1').append(temp_html2);
                 }
-                let else_data_2 = data['result'][2]
+                let else_data_2 = test_var[2]
                 for (let i = 0; i < 10; i++) {
                     let music_title = else_data_2['title'][i]
                     let music_img_src = else_data_2['img'][i]
