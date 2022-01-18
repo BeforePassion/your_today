@@ -22,6 +22,7 @@ inputImage.addEventListener("change", e => {
 })
 
 function posting() {
+    $('#loading_status').show();
     let file = $('#chooseFile')[0].files[0]
     let form_data = new FormData()
 
@@ -36,6 +37,7 @@ function posting() {
         contentType: false,
         processData: false,
         success: function (response) {
+            $('#loading_status').hide();
             console.log(response["result"])
             data_cart = response["result"]
             let recon = data_cart.replace(/\[/g, '').replace(/\]/g, '').split(',')
