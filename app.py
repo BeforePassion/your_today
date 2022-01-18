@@ -187,6 +187,8 @@ def home():
 def main():
     return render_template('home.html')
 
+
+@app.route('/result', methods=['POST', 'GET'])
 def result():
     print(request.form['msg'])  #Feeling_num을 넘겨줘서 이걸로 데이터 검색 후 다시 전송
     return render_template('result.html', msg=request.form['msg'])
@@ -210,6 +212,7 @@ def result_api():
     test_datagen = ImageDataGenerator(rescale=1. / 255)
     test_dir = os.getcwd()+'\static\\model/img\\'  # test_dir에 폴더별로 사진을 저장 해야함
     test_dir = os.getcwd()+'\\static\\model\\img\\'  # test_dir에 폴더별로 사진을 저장 해야함
+
     test_generator = test_datagen.flow_from_directory(
         test_dir,
         target_size=(224, 224),
