@@ -210,7 +210,6 @@ def result_api():
 
 
     test_datagen = ImageDataGenerator(rescale=1. / 255)
-    test_dir = os.getcwd()+'\static\\model/img\\'  # test_dir에 폴더별로 사진을 저장 해야함
     test_dir = os.getcwd()+'\\static\\model\\img\\'  # test_dir에 폴더별로 사진을 저장 해야함
 
     test_generator = test_datagen.flow_from_directory(
